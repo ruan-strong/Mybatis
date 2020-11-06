@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rp.dao.StudentDao" >
+
+    <!-- 动态sql where if -->
+    <select id="selectStudent" resultType="com.rp.pojo.Student" >
+            select * from student
+            <where>
+                <if test="age != null">
+                    age &gt; #{age}
+                </if>
+
+                <if test="sex != null">
+                    and sex = #{sex}
+                </if>
+            </where>
+
+    </select>
+
+    <!-- 级联查询用到它，当查一班的学生的时候，classesMapper.xml中传值过来传的student表的外键进行查询学生 -->
+    <select id="selectStudentById" resultType="com.rp.pojo.Student" >
+        select * from student where classno = #{value }
+    </select>
+
+    <resultMap id="manyToOne" type="com.rp.pojo.Student">
+        <id property="id" column="id"></id>
+        <result property="classno" column="classno"></result>
+        <association property="classes" select="com.rp.dao.ClassesDao.selectClassesByClassno" column="classno"></association>
+    </resultMap>
+
+    <select id="selectManyToOne" resultMap="manyToOne">
+        select * from student
+    </select>
+
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rp.dao.ClassesDao" >
+
+    <resultMap id="oneToMany" type="com.rp.pojo.Classes">
+        <id property="id" column="id"></id>
+        <collection property="studentList" select="com.rp.dao.StudentDao.selectStudentById" column="classno"></collection>
+    </resultMap>
+
+    <select id="selectOneToMany" resultMap="oneToMany" parameterType="java.lang.String">
+        select * from classes where name = #{value}
+    </select>
+
+    <select id="selectClassesByClassno" resultType="com.rp.pojo.Classes">
+        select * from classes where classno = #{value}
+    </select>
+</mapper>
