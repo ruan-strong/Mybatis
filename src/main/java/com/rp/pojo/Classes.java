@@ -12,6 +12,8 @@ public class Classes {
   private List<Student> studentList;
 /*从远程库克隆下来，新增内容*/
   private String classGrade;
+  /*再加*/
+  private String classGrade1;
 
   public long getId() {
     return id;
